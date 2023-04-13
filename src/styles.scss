@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "./variables";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+#add-new-task {
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  z-index: $zindex-fixed;
+}

@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-task
+      *ngFor="let task of tasks"
+      [id]="task.id"
+      [title]="task.title"
+      [completed]="task.completed"
+    >
+    </app-task>
+  </div>
+</div>
