@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { validate } from 'class-validator';
-import { Task } from './models/task.model';
 
 @Component({
   selector: 'app-root',

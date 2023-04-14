@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task } from '../models/task.model';
+import { TaskManagerService } from '../task-manager.service';
 
 @Component({
   selector: 'app-task-form',
@@ -9,10 +10,15 @@ import { Task } from '../models/task.model';
 })
 export class TaskFormComponent {
   taskForm!: FormGroup;
+  taskService: TaskManagerService;
+
+  constructor(taskService: TaskManagerService) {
+    this.taskService = taskService;
+  }
 
   ngOnInit() {
     this.taskForm = new FormGroup({
-      title: new FormControl(Task.name, [
+      title: new FormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(40),
@@ -25,6 +31,10 @@ export class TaskFormComponent {
   }
 
   onTaskAddHandler(event: Event): void {
+    // console.log(this.taskForm, event);
 
+    if (this.taskForm.valid) {
+      this.taskService.add(new Task(this.taskForm.value.title, false));
+    }
   }
 }

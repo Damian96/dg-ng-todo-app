@@ -1,12 +1,14 @@
-<mat-card class="task-component">
-  <mat-card-header>
-    <mat-card-title></mat-card-title>
-  </mat-card-header>
-  <!-- <mat-card-content>
-    Example Card
-    <mat-divider></mat-divider>
-  </mat-card-content> -->
-  <mat-card-actions>
-    <button mat-button>Completed</button>
-  </mat-card-actions>
-</mat-card>
+<div *ngIf="draggable.handle" dndHandle>HANDLE</div>
+<span [class.completed-task]="task.completed">{{ task.title }}</span>
+<div>
+  <button
+    type="button"
+    class="btn btn-secondary mr-2"
+    (click)="toggleTaskComplete(task)"
+  >
+    {{ task.completed ? "Incomplete" : "Completed" }}
+  </button>
+  <button type="button" class="btn btn-danger" (click)="deleteTask(task)">
+    Delete
+  </button>
+</div>

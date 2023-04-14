@@ -1,30 +1,82 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Task } from './models/task.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskManagerService {
-  private tasks: Task[] = [];
+  private incompleteTasks: Task[] = [];
+  private completedTasks: Task[] = [];
 
-  constructor() {}
+  constructor(private ngZone: NgZone) {}
+
+  /**
+   * Custom-made searching fn, instead of Array.prototype.findIndex
+   * @param haystack
+   * @param needle
+   * @returns The index of the needle
+   */
+  private findTaskById(haystack: Task[], needle: Task): number {
+    return haystack.findIndex((task, index) => {
+      return task.id === needle.id;
+    });
+  }
 
   add(task: Task): void {
-    this.tasks.push(task);
+    this.incompleteTasks.push(task);
   }
 
   delete(task: Task): void {
-    const index = this.tasks.indexOf(task);
-    if (index !== -1) {
-      this.tasks.splice(index, 1);
+    const index = this.findTaskById(this.incompleteTasks, task);
+    if (index >= 0) {
+      this.incompleteTasks.splice(index, 1);
+    }
+
+    const completedIndex = this.completedTasks.indexOf(task);
+    if (completedIndex >= 0) {
+      this.completedTasks.splice(completedIndex, 1);
     }
   }
 
   markComplete(task: Task): void {
     task.completed = true;
+
+    const index = this.findTaskById(this.incompleteTasks, task);
+    if (index >= 0) {
+      this.incompleteTasks.splice(index, 1);
+      this.completedTasks.push(task);
+    }
+
+    // Trigger change detection
+    this.ngZone.run(() => {});
   }
 
-  getTasks(): Task[] {
-    return this.tasks;
+  markInComplete(task: Task): void {
+    task.completed = false;
+
+    const index = this.findTaskById(this.completedTasks, task);
+    if (index >= 0) {
+      this.completedTasks.splice(index, 1);
+      this.incompleteTasks.push(task);
+    }
+
+    // Trigger change detection
+    this.ngZone.run(() => {});
+  }
+
+  getIncompleteTasks(): Task[] {
+    return this.incompleteTasks;
+  }
+
+  getCompletedTasks(): Task[] {
+    return this.completedTasks;
+  }
+
+  toggleTaskComplete(task: Task) {
+    if (task.completed) {
+      this.markInComplete(task);
+    } else {
+      this.markComplete(task);
+    }
   }
 }

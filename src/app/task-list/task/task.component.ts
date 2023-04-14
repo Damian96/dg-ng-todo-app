@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Task } from 'src/app/models/task.model';
 import { TaskManagerService } from 'src/app/task-manager.service';
 
 @Component({
@@ -7,14 +8,24 @@ import { TaskManagerService } from 'src/app/task-manager.service';
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent {
-  @Input()
-  id: number | undefined;
+  @Input() task!: Task;
+  taskService: TaskManagerService;
 
-  @Input()
-  title: string = '';
+  draggable = {
+    effectAllowed: 'all',
+    disable: false,
+    handle: true,
+  };
 
-  @Input()
-  completed: boolean = false;
+  constructor(taskService: TaskManagerService) {
+    this.taskService = taskService;
+  }
 
-  constructor() {}
+  deleteTask(task: Task): void {
+    this.taskService.delete(task);
+  }
+
+  toggleTaskComplete(task: Task): void {
+    this.taskService.toggleTaskComplete(task);
+  }
 }
