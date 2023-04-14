@@ -5,8 +5,11 @@ import { Task } from './models/task.model';
   providedIn: 'root',
 })
 export class TaskManagerService {
-  private incompleteTasks: Task[] = [];
-  private completedTasks: Task[] = [];
+  private incompleteTasks: Task[] = [
+    new Task('Sample Task 1', false),
+    new Task('Sample Task 2', false),
+  ];
+  private completedTasks: Task[] = [new Task('Sample Task 2', true)];
 
   constructor(private ngZone: NgZone) {}
 

@@ -3,9 +3,15 @@
 @import "./variables";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-#add-new-task {
-  position: fixed;
-  right: 5%;
-  bottom: 5%;
-  z-index: $zindex-fixed;
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.border-dashed {
+  border: 1px dashed black !important;
 }

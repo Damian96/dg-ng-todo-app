@@ -1,14 +1,17 @@
-<div *ngIf="draggable.handle" dndHandle>HANDLE</div>
+<div *ngIf="draggable.handle" dndHandle class="cursor-grab"><mat-icon>drag_handle</mat-icon></div>
 <span [class.completed-task]="task.completed">{{ task.title }}</span>
 <div>
   <button
     type="button"
-    class="btn btn-secondary mr-2"
+    class="btn border border-1 mx-1"
+    title="{{ task.completed ? 'Mark as Incompleted' : 'Mark as Completed' }}"
+    [class.completed]="task.completed"
+    [class.incomplete]="!task.completed"
     (click)="toggleTaskComplete(task)"
   >
-    {{ task.completed ? "Incomplete" : "Completed" }}
+    <mat-icon>{{ task.completed ? 'timer' : 'done_outline' }}</mat-icon>
   </button>
-  <button type="button" class="btn btn-danger" (click)="deleteTask(task)">
-    Delete
+  <button type="button" title="Delete Permantly" class="btn btn-danger" (click)="deleteTask(task)">
+    <mat-icon>delete</mat-icon>
   </button>
 </div>

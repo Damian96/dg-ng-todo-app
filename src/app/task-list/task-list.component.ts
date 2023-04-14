@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TaskManagerService } from '../task-manager.service';
 import { Task } from '../models/task.model';
 import { DndDropEvent } from 'ngx-drag-drop';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-task-list',
@@ -38,12 +39,32 @@ export class TaskListComponent {
   }
 
   /* Drag and Drop */
-  onDragover(event: DragEvent) {}
-
-  onDrop(event: DndDropEvent) {
+  onDragStart(event: DragEvent) {
     console.log(event);
 
+    if ($(event.target!).closest('.completed-list').length > 0) {
+      $('.incompleted-list').addClass('border-dashed');
+    } else if ($(event.target!).closest('.incompleted-list').length > 0) {
+      $('.completed-list').addClass('border-dashed');
+    }
+  }
+
+  onDragover(event: DragEvent) {}
+
+  onDragEnd(event: DragEvent) {
+    $('.incompleted-list, .completed-list').removeClass('border-dashed');
+  }
+
+  onDrop(event: DndDropEvent) {
+    // console.log(event);
     const task = event.data as Task;
-    this.taskService.toggleTaskComplete(task);
+
+    if ($(event.event.target!).closest('.completed-list').length > 0) {
+      this.taskService.markComplete(task);
+    } else if ($(event.event.target!).closest('.incompleted-list').length > 0) {
+      this.taskService.markInComplete(task);
+    }
+
+    $('.incompleted-list, .completed-list').removeClass('border-dashed');
   }
 }

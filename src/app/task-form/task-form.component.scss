@@ -1,0 +1,26 @@
+.main-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+mat-drawer-content {
+  width: 100% !important;
+  height: 100vh !important;
+  position: relative;
+}
+
+#add-new-task {
+  position: fixed;
+  left: 5%;
+  bottom: 5%;
+  z-index: 100;
+}
+
+mat-drawer {
+  overflow: hidden;
+  max-width: 33.33%;
+
+  form {
+    overflow: hidden;
+  }
+}

@@ -31,10 +31,9 @@ export class TaskFormComponent {
   }
 
   onTaskAddHandler(event: Event): void {
-    // console.log(this.taskForm, event);
-
     if (this.taskForm.valid) {
       this.taskService.add(new Task(this.taskForm.value.title, false));
+      this.taskForm.reset();
     }
   }
 }
