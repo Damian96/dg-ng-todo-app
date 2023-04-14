@@ -3,7 +3,6 @@
     <h2><u>Incomplete</u> Tasks:</h2>
     <div
       dndDropzone
-      (dndDragover)="onDragover($event)"
       (dndDrop)="onDrop($event)"
       class="task-list incompleted-list"
     >
@@ -15,7 +14,6 @@
           [dndDisableIf]="draggable.disable"
           [dndEffectAllowed]="'move'"
           (dndStart)="onDragStart($event)"
-          (dndEnd)="onDragEnd($event)"
           class="list-group-item d-flex justify-content-between align-items-center"
         >
         </app-task>
@@ -27,7 +25,6 @@
     <div
       class="task-list completed-list"
       dndDropzone
-      (dndDragover)="onDragover($event)"
       (dndDrop)="onDrop($event)"
     >
       <ul class="list-group">
@@ -38,7 +35,6 @@
           [dndDisableIf]="draggable.disable"
           [dndEffectAllowed]="'move'"
           (dndStart)="onDragStart($event)"
-          (dndEnd)="onDragEnd($event)"
           class="list-group-item d-flex justify-content-between align-items-center"
         >
         </app-task>

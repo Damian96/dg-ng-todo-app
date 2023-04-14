@@ -9,3 +9,8 @@
 .task-list {
   min-height: 50vh;
 }
+
+.task-list.dndDragover {
+  border: 1px dashed black;
+  background-color: darkgray;
+}

@@ -49,11 +49,6 @@ export class TaskListComponent {
     }
   }
 
-  onDragover(event: DragEvent) {}
-
-  onDragEnd(event: DragEvent) {
-    $('.incompleted-list, .completed-list').removeClass('border-dashed');
-  }
 
   onDrop(event: DndDropEvent) {
     // console.log(event);
@@ -64,7 +59,5 @@ export class TaskListComponent {
     } else if ($(event.event.target!).closest('.incompleted-list').length > 0) {
       this.taskService.markInComplete(task);
     }
-
-    $('.incompleted-list, .completed-list').removeClass('border-dashed');
   }
 }

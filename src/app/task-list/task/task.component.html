@@ -11,7 +11,9 @@
   >
     <mat-icon>{{ task.completed ? 'timer' : 'done_outline' }}</mat-icon>
   </button>
-  <button type="button" title="Delete Permantly" class="btn btn-danger" (click)="deleteTask(task)">
+  <button type="button" title="Delete Permantly"
+    class="btn btn-danger" (click)="deleteTask(task)"
+    *ngIf="task.completed">
     <mat-icon>delete</mat-icon>
   </button>
 </div>
