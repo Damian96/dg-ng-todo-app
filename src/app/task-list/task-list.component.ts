@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { TaskManagerService } from '../task-manager.service';
 import { Task } from '../models/task.model';
 import { DndDropEvent } from 'ngx-drag-drop';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-task-list',
@@ -39,24 +38,13 @@ export class TaskListComponent {
   }
 
   /* Drag and Drop */
-  onDragStart(event: DragEvent) {
-    console.log(event);
-
-    if ($(event.target!).closest('.completed-list').length > 0) {
-      $('.incompleted-list').addClass('border-dashed');
-    } else if ($(event.target!).closest('.incompleted-list').length > 0) {
-      $('.completed-list').addClass('border-dashed');
-    }
-  }
-
-
   onDrop(event: DndDropEvent) {
     // console.log(event);
     const task = event.data as Task;
 
-    if ($(event.event.target!).closest('.completed-list').length > 0) {
+    if ((event.event.target as HTMLElement)!.closest('.completed-list') != null) {
       this.taskService.markComplete(task);
-    } else if ($(event.event.target!).closest('.incompleted-list').length > 0) {
+    } else if ((event.event.target! as HTMLElement).closest('.incompleted-list') != null) {
       this.taskService.markInComplete(task);
     }
   }
