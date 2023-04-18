@@ -1,77 +1,73 @@
-<mat-drawer-container class="main-container" [hasBackdrop]="'unset'">
-  <mat-drawer #drawer [mode]="'push'" class="container-fluid">
-    <div class="row mx-0">
-      <form
-        class="col-sm-12 py-3 px-2"
-        novalidate
-        [formGroup]="taskForm"
-        #formDir="ngForm"
+<mat-toolbar color="primary" class="mb-4">
+  <div class="container-fluid">
+    <div class="row">
+      <span class="me-auto col col-auto d-flex justify-content-center align-items-center">
+        Angular v.15 To-do App
+      </span>
+      <button
+        class="col col-auto"
+        mat-icon-button
+        color="white"
+        title="Add new Task"
+        aria-label="Add new Task"
+        (click)="openOffCanvas(content)"
       >
-        <legend><u>New Task Form</u></legend>
-        <div class="row my-3">
-          <!-- <fieldset class="form-group"> -->
-          <label for="input-task-title" class="col-sm-12 mb-2">Title</label>
-          <div class="col-sm-12">
-            <input
-              type="text"
-              name="title"
-              id="input-task-title"
-              class="form-control"
-              [class.is-invalid]="
-                title.invalid && (title.dirty || title.touched)
-              "
-              formControlName="title"
-              required
-              aria-required="true"
-            />
-          </div>
-          <div
-            *ngIf="title.invalid && (title.dirty || title.touched)"
-            class="alert alert-danger mt-4"
-          >
-            <div *ngIf="title.errors?.['required']">
-              Task Title is required.
-            </div>
-            <div *ngIf="title.errors?.['minlength']">
-              Task Title must be at least 2 characters long.
-            </div>
-            <div *ngIf="title.errors?.['maxlength']">
-              Task Title should be at most 40 characters long.
-            </div>
-          </div>
-          <!-- </fieldset> -->
-        </div>
-        <button
-          type="submit"
-          [disabled]="taskForm.invalid"
-          class="btn btn-primary"
-          (click)="drawer.toggle();onTaskAddHandler($event);"
-        >
-          Add Task
-        </button>
-      </form>
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
-  </mat-drawer>
-  <mat-drawer-content>
-    <button
-      id="add-new-task"
-      mat-fab
-      color="primary"
-      title="Add new Task"
-      aria-label="Add new Task"
-      (click)="drawer.toggle()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-    <section class="container-fluid mb-5">
-      <div class="row">
-        <div class="col-12">
-          <h1 class="text-center">Simple Todo List App (Angular v.15)</h1>
+  </div>
+</mat-toolbar>
+
+<ng-template #content let-offcanvas>
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title" id="offcanvas-basic-title">Add Task (Create)</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <form class="col-sm-12 p-2" novalidate [formGroup]="taskForm" #formDir="ngForm">
+      <div class="row mb-3">
+        <!-- <fieldset class="form-group"> -->
+        <label for="input-task-title" class="col-sm-12 mb-2">Title</label>
+        <div class="col-sm-12">
+          <input
+            type="text"
+            name="title"
+            id="input-task-title"
+            class="form-control"
+            [class.is-invalid]="title.invalid && (title.dirty || title.touched)"
+            formControlName="title"
+            required
+            aria-required="true"
+          />
         </div>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger mt-4">
+          <div *ngIf="title.errors?.['required']">Task Title is required.</div>
+          <div *ngIf="title.errors?.['minlength']">Task Title must be at least 2 characters long.</div>
+          <div *ngIf="title.errors?.['maxlength']">Task Title should be at most 40 characters long.</div>
+        </div>
+        <!-- </fieldset> -->
       </div>
-    </section>
-    <section class="container-fluid">
-      <app-task-list></app-task-list>
-    </section>
-  </mat-drawer-content>
-</mat-drawer-container>
+      <button
+        type="submit"
+        [disabled]="taskForm.invalid"
+        class="btn btn-primary"
+        (click)="onTaskAddHandler(content, $event)"
+      >
+        Add Task
+      </button>
+    </form>
+  </div>
+</ng-template>
+
+<button
+  class="d-none d-md-block"
+  id="add-new-task"
+  mat-fab
+  color="primary"
+  title="Add new Task"
+  aria-label="Add new Task"
+  (click)="openOffCanvas(content)"
+>
+  <mat-icon>add</mat-icon>
+</button>

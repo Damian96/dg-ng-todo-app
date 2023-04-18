@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { TaskManagerService } from './task-manager.service';
 import { TaskListComponent } from './task-list/task-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './material/material.module';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskComponent } from './task-list/task/task.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TaskComponent } from './task-list/task/task.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [TaskManagerService],
   bootstrap: [AppComponent],
